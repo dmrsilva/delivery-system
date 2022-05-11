@@ -3,13 +3,29 @@ package com.company.delivery.entities;
 import java.io.Serializable;
 import java.util.Objects;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "tb_product")
 public class Product implements Serializable {
 	private static final long serialVersionUID = 1L;
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String name;
 	private String description;
 	private String imaUri;
+	
+	@ManyToOne
+	@JoinColumn(name = "order_id")
+	private Order order;
 	
 	public Product() {
 	}
@@ -51,6 +67,14 @@ public class Product implements Serializable {
 
 	public void setImaUri(String imaUri) {
 		this.imaUri = imaUri;
+	}
+
+	public Order getOrder() {
+		return order;
+	}
+
+	public void setOrder(Order order) {
+		this.order = order;
 	}
 
 	@Override

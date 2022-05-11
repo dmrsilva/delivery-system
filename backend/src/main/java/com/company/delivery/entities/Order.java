@@ -1,15 +1,31 @@
 package com.company.delivery.entities;
 
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 import com.company.delivery.entities.enums.OrderStatus;
 
+@Entity
+@Table(name = "tb_order")
 public class Order {
 	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private Instant moment;
 	private OrderStatus status;
+	
+	@OneToMany(mappedBy = "order")
+	private List<Product> products = new ArrayList<>();
 	
 	public Order() {
 	}
@@ -42,6 +58,10 @@ public class Order {
 
 	public void setStatus(OrderStatus status) {
 		this.status = status;
+	}
+
+	public List<Product> getProducts() {
+		return products;
 	}
 
 	@Override
