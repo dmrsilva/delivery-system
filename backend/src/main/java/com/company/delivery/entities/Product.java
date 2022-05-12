@@ -24,7 +24,7 @@ public class Product implements Serializable {
 	
 	@Column(columnDefinition = "TEXT")
 	private String description;
-	private String imaUri;
+	private String imgUri;
 	
 	@ManyToOne
 	@JoinColumn(name = "order_id")
@@ -33,11 +33,11 @@ public class Product implements Serializable {
 	public Product() {
 	}
 
-	public Product(Long id, String name, String description, String imaUri) {
+	public Product(Long id, String name, String description, String imgUri) {
 		this.id = id;
 		this.name = name;
 		this.description = description;
-		this.imaUri = imaUri;
+		this.imgUri = imgUri;
 	}
 
 	public Long getId() {
@@ -65,11 +65,11 @@ public class Product implements Serializable {
 	}
 
 	public String getImaUri() {
-		return imaUri;
+		return imgUri;
 	}
 
-	public void setImaUri(String imaUri) {
-		this.imaUri = imaUri;
+	public void setImaUri(String imgUri) {
+		this.imgUri = imgUri;
 	}
 
 	public Order getOrder() {
