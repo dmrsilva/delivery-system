@@ -4,12 +4,18 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import javax.persistence.EntityNotFoundException;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.company.delivery.dto.ProductDTO;
 import com.company.delivery.entities.Product;
 import com.company.delivery.repositories.ProductRepository;
+import com.company.delivery.services.exceptions.DatabaseException;
+import com.company.delivery.services.exceptions.ResourceNotFoundException;
 
 public class ProductService {
 	
@@ -25,7 +31,7 @@ public class ProductService {
 	@Transactional(readOnly = true)
 	public ProductDTO findByProductId(Long id) {
 		Optional<Product> obj = repository.findById(id);
-		Product product = obj.get();
+		Product product = obj.orElseThrow(() -> new ResourceNotFoundException("Entity not found"));
 		return new ProductDTO(product);
 	}
 
@@ -39,10 +45,27 @@ public class ProductService {
 	
 	@Transactional
 	public ProductDTO updateProduct(Long id, ProductDTO dto) {
-		Product product = repository.getById(id);
-		copyDtoToEntity(dto, product);
-		product = repository.save(product);
-		return new ProductDTO(product);
+		try {
+			Product product = repository.getById(id);
+			copyDtoToEntity(dto, product);
+			product = repository.save(product);
+			return new ProductDTO(product);
+		}
+		catch (EntityNotFoundException e) {
+			throw new ResourceNotFoundException("Id not found " + id);
+		}
+	}
+
+	public void delete(Long id) {
+		try {
+			repository.deleteById(id);
+		}
+		catch (EmptyResultDataAccessException e) {
+			throw new ResourceNotFoundException("id not found " + id);
+		}
+		catch (DataIntegrityViolationException e) {
+			throw new DatabaseException("Integrity violation");
+		}
 	}
 	
 	private void copyDtoToEntity(ProductDTO dto, Product product) {
@@ -51,9 +74,4 @@ public class ProductService {
 		product.setImgUri(dto.getImgUri());
 	}
 	
-	public void delete(Long id) {
-		repository.deleteById(id);
-	}
-	
-
 }
