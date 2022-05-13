@@ -1,12 +1,19 @@
 package com.company.delivery.resources;
 
+import java.net.URI;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.company.delivery.dto.ProductDTO;
 import com.company.delivery.services.ProductService;
@@ -22,6 +29,32 @@ public class ProductResource {
 	public ResponseEntity<List<ProductDTO>> findAllProducts() {
 		List<ProductDTO> list = service.findAllProducts();
 		return ResponseEntity.ok().body(list);
+	}
+	
+	@GetMapping(value = "/{id}")
+	public ResponseEntity<ProductDTO> findByProductId(@PathVariable Long id) {
+		ProductDTO dto = service.findByProductId(id);
+		return ResponseEntity.ok().body(dto);
+	}
+	
+	@PostMapping
+	public ResponseEntity<ProductDTO> insertProduct(@RequestBody ProductDTO dto) {
+		dto = service.insertProduct(dto);
+		URI uri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/{id}")
+				.buildAndExpand(dto.getId()).toUri();
+		return ResponseEntity.created(uri).body(dto);
+	}
+	
+	@PutMapping(value = "/{id}")
+	public ResponseEntity<ProductDTO> updateProduct(@PathVariable Long id, @RequestBody ProductDTO dto) {
+		dto = service.updateProduct(id, dto);
+		return ResponseEntity.ok().body(dto);
+	}
+	
+	@DeleteMapping(value = "/{id}")
+	public ResponseEntity<Void> delete(@PathVariable Long id) {
+		service.delete(id);
+		return ResponseEntity.noContent().build();
 	}
 	
 }
