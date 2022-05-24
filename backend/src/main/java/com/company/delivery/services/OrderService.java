@@ -1,5 +1,6 @@
 package com.company.delivery.services;
 
+import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -13,8 +14,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.company.delivery.dto.OrderDTO;
+import com.company.delivery.dto.ProductDTO;
 import com.company.delivery.entities.Order;
+import com.company.delivery.entities.Product;
 import com.company.delivery.repositories.OrderRepository;
+import com.company.delivery.repositories.ProductRepository;
 import com.company.delivery.services.exceptions.DatabaseException;
 import com.company.delivery.services.exceptions.ResourceNotFoundException;
 
@@ -24,17 +28,20 @@ public class OrderService {
 	@Autowired
 	private OrderRepository repository;
 	
+	@Autowired
+	private ProductRepository productRepository;
+	
 	@Transactional(readOnly = true)
 	public List<OrderDTO> findAllOrders() {
 		List<Order> orders = repository.findAll();
-		return orders.stream().map(x -> new OrderDTO(x)).collect(Collectors.toList());
+		return orders.stream().map(x -> new OrderDTO(x, x.getProducts())).collect(Collectors.toList());
 	}
 	
 	@Transactional(readOnly = true)
 	public OrderDTO findByOrderId(Long id) {
 		Optional<Order> obj = repository.findById(id);
 		Order order = obj.orElseThrow(() -> new ResourceNotFoundException("Entity not found"));
-		return new OrderDTO(order);
+		return new OrderDTO(order, order.getProducts());
 	}
 	
 	@Transactional
@@ -71,8 +78,13 @@ public class OrderService {
 	}
 	
 	private void copyDtoToEntity(OrderDTO dto, Order order) {
-		order.setMoment(dto.getMoment());
+		order.setMoment(Instant.now());
 		order.setStatus(dto.getStatus());
+		
+		for (ProductDTO prodDTO : dto.getProducts()) {
+			Product product = productRepository.getById(prodDTO.getId());
+			order.getProducts().add(product);
+		}
 	}
 	
 }

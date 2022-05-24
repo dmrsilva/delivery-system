@@ -22,6 +22,7 @@ public class Factory {
 	
 	public static Order createOrder() {
 		Order order = new Order(1L, Instant.parse("2022-05-10T18:25:20.12345Z"), OrderStatus.PENDING);
+		order.getProducts().add(createProduct());
 		return order;
 	}
 	

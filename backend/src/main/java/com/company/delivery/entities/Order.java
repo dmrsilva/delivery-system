@@ -1,16 +1,18 @@
 package com.company.delivery.entities;
 
 import java.time.Instant;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 import com.company.delivery.entities.enums.OrderStatus;
@@ -27,8 +29,11 @@ public class Order {
 	private Instant moment;
 	private OrderStatus status;
 	
-	@OneToMany(mappedBy = "order")
-	private List<Product> products = new ArrayList<>();
+	@ManyToMany
+	@JoinTable(name = "tb_order_product",
+			joinColumns = @JoinColumn(name = "order_id"),
+			inverseJoinColumns = @JoinColumn(name = "product_id"))
+	private Set<Product> products = new HashSet<>();
 	
 	public Order() {
 	}
@@ -63,7 +68,7 @@ public class Order {
 		this.status = status;
 	}
 
-	public List<Product> getProducts() {
+	public Set<Product> getProducts() {
 		return products;
 	}
 

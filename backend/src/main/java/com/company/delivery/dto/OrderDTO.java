@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import com.company.delivery.entities.Order;
 import com.company.delivery.entities.Product;
@@ -33,7 +34,7 @@ public class OrderDTO implements Serializable {
 		status = entity.getStatus();
 	}
 	
-	public OrderDTO(Order entity, List<Product> products) {
+	public OrderDTO(Order entity, Set<Product> products) {
 		this(entity);
 		products.forEach(prod -> this.products.add(new ProductDTO(prod)));
 	}

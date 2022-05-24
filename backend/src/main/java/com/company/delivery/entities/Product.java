@@ -1,15 +1,16 @@
 package com.company.delivery.entities;
 
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -25,10 +26,9 @@ public class Product implements Serializable {
 	@Column(columnDefinition = "TEXT")
 	private String description;
 	private String imgUri;
-	
-	@ManyToOne
-	@JoinColumn(name = "order_id")
-	private Order order;
+
+	@ManyToMany(mappedBy = "products")
+	private Set<Order> orders = new HashSet<>();
 	
 	public Product() {
 	}
@@ -72,12 +72,8 @@ public class Product implements Serializable {
 		this.imgUri = imgUri;
 	}
 
-	public Order getOrder() {
-		return order;
-	}
-
-	public void setOrder(Order order) {
-		this.order = order;
+	public Set<Order> getOrders() {
+		return orders;
 	}
 
 	@Override
