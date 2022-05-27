@@ -14,21 +14,21 @@ public class Factory {
 		Product product = new Product(1L, "Bolo", "Bolo de chocolate", "http://bolos.com");
 		return product;
 	}
-	
+
 	public static ProductDTO createProductDTO() {
 		Product product = createProduct();
 		return new ProductDTO(product);
 	}
-	
+
 	public static Order createOrder() {
 		Order order = new Order(1L, Instant.parse("2022-05-10T18:25:20.12345Z"), OrderStatus.PENDING);
 		order.getProducts().add(createProduct());
 		return order;
 	}
-	
+
 	public static OrderDTO createOrderDTO() {
 		Order order = createOrder();
 		return new OrderDTO(order);
-	}	
-	
+	}
+
 }

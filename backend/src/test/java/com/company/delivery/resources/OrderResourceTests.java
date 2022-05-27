@@ -35,140 +35,123 @@ public class OrderResourceTests {
 
 	@Autowired
 	private MockMvc mockMvc;
-	
+
 	@MockBean
 	private OrderService service;
-	
+
 	@Autowired
 	private ObjectMapper objectMapper;
-	
+
 	private long existingId;
 	private long nonExistingId;
 	private long dependentId;
 	private OrderDTO orderDTO;
 	private List<OrderDTO> list;
-	
+
 	@BeforeEach
 	void setUp() throws Exception {
-		
+
 		existingId = 1L;
 		nonExistingId = 2L;
 		dependentId = 3L;
-		
+
 		orderDTO = Factory.createOrderDTO();
-		
+
 		when(service.findAllOrders()).thenReturn(list);
-		
+
 		when(service.findByOrderId(existingId)).thenReturn(orderDTO);
 		when(service.findByOrderId(nonExistingId)).thenThrow(ResourceNotFoundException.class);
-		
+
 		when(service.insertOrder(any())).thenReturn(orderDTO);
-		
+
 		when(service.updateOrder(eq(existingId), any())).thenReturn(orderDTO);
 		when(service.updateOrder(eq(nonExistingId), any())).thenThrow(ResourceNotFoundException.class);
-		
+
 		doNothing().when(service).delete(existingId);
 		doThrow(ResourceNotFoundException.class).when(service).delete(nonExistingId);
 		doThrow(DatabaseException.class).when(service).delete(dependentId);
 	}
-	
+
 	@Test
 	public void findAllShouldReturnList() throws Exception {
-		
-		ResultActions result = 
-				mockMvc.perform(get("/orders")
-						.accept(MediaType.APPLICATION_JSON));
-		
-		result.andExpect(status().isOk());		
+
+		ResultActions result = mockMvc.perform(get("/orders").accept(MediaType.APPLICATION_JSON));
+
+		result.andExpect(status().isOk());
 	}
-	
+
 	@Test
 	public void findByIdShouldReturnOrderWhenIdExists() throws Exception {
-		
-		ResultActions result = 
-				mockMvc.perform(get("/orders/{id}", existingId)
-						.accept(MediaType.APPLICATION_JSON));
-		
+
+		ResultActions result = mockMvc.perform(get("/orders/{id}", existingId).accept(MediaType.APPLICATION_JSON));
+
 		result.andExpect(status().isOk());
 		result.andExpect(jsonPath("$.id").exists());
 		result.andExpect(jsonPath("$.moment").exists());
 		result.andExpect(jsonPath("$.status").exists());
 	}
-	
+
 	@Test
 	public void findByIdShouldReturnNotFoundWhenIdDoesNotExist() throws Exception {
-		
-		ResultActions result = 
-				mockMvc.perform(get("/orders/{id}", nonExistingId)
-						.accept(MediaType.APPLICATION_JSON));
-		
+
+		ResultActions result = mockMvc.perform(get("/orders/{id}", nonExistingId).accept(MediaType.APPLICATION_JSON));
+
 		result.andExpect(status().isNotFound());
 	}
-	
+
 	@Test
 	public void insertShouldReturnCreateAndOrderDTO() throws Exception {
-		
+
 		String jsonBody = objectMapper.writeValueAsString(orderDTO);
-		
-		ResultActions result = 
-				mockMvc.perform(post("/orders")
-						.content(jsonBody)
-						.contentType(MediaType.APPLICATION_JSON)
-						.accept(MediaType.APPLICATION_JSON));
-		
+
+		ResultActions result = mockMvc.perform(post("/orders").content(jsonBody).contentType(MediaType.APPLICATION_JSON)
+				.accept(MediaType.APPLICATION_JSON));
+
 		result.andExpect(status().isCreated());
 		result.andExpect(jsonPath("$.id").exists());
 		result.andExpect(jsonPath("$.moment").exists());
 		result.andExpect(jsonPath("$.status").exists());
 	}
-	
+
 	@Test
 	public void updateShouldReturnOrderDTOWhenIdExists() throws Exception {
-		
+
 		String jsonBody = objectMapper.writeValueAsString(orderDTO);
-		
-		ResultActions result = 
-				mockMvc.perform(put("/orders/{id}", existingId)
-						.content(jsonBody)
-						.contentType(MediaType.APPLICATION_JSON)
-						.accept(MediaType.APPLICATION_JSON));
-		
+
+		ResultActions result = mockMvc.perform(put("/orders/{id}", existingId).content(jsonBody)
+				.contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON));
+
 		result.andExpect(status().isOk());
 		result.andExpect(jsonPath("$.id").exists());
 		result.andExpect(jsonPath("$.moment").exists());
 		result.andExpect(jsonPath("$.status").exists());
 	}
-	
+
 	@Test
 	public void updateShouldReturnNotFoundWhenIdDoesNoExists() throws Exception {
-		
+
 		String jsonBody = objectMapper.writeValueAsString(orderDTO);
-		
-		ResultActions result = 
-				mockMvc.perform(put("/orders/{id}", nonExistingId)
-						.content(jsonBody)
-						.contentType(MediaType.APPLICATION_JSON)
-						.accept(MediaType.APPLICATION_JSON));
-		
+
+		ResultActions result = mockMvc.perform(put("/orders/{id}", nonExistingId).content(jsonBody)
+				.contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON));
+
 		result.andExpect(status().isNotFound());
 	}
-	
+
 	@Test
 	public void deleteShouldReturnNoContentWhenIdExists() throws Exception {
-		
-		ResultActions result = 
-				mockMvc.perform(delete("/orders/{id}", existingId));
-		
+
+		ResultActions result = mockMvc.perform(delete("/orders/{id}", existingId));
+
 		result.andExpect(status().isNoContent());
 	}
 
 	@Test
 	public void deleteShouldReturnNotFoundWhenIdDoesNotExist() throws Exception {
-		
-		ResultActions result = 
-				mockMvc.perform(delete("/orders/{id}", nonExistingId));
-		
+
+		ResultActions result = mockMvc.perform(delete("/orders/{id}", nonExistingId));
+
 		result.andExpect(status().isNotFound());
 	}
-	
+
 }
