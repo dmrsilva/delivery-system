@@ -11,7 +11,7 @@ import com.company.delivery.entities.enums.OrderStatus;
 public class Factory {
 
 	public static Product createProduct() {
-		Product product = new Product(1L, "Bolo", "Bolo de chocolate", "http://bolos.com");
+		Product product = new Product(1L, "Bolo", "Bolo de chocolate", 50.00, "http://bolos.com");
 		return product;
 	}
 

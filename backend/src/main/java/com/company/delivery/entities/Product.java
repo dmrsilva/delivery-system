@@ -25,6 +25,8 @@ public class Product implements Serializable {
 	
 	@Column(columnDefinition = "TEXT")
 	private String description;
+	
+	private Double price;
 	private String imgUri;
 
 	@ManyToMany(mappedBy = "products")
@@ -33,10 +35,11 @@ public class Product implements Serializable {
 	public Product() {
 	}
 
-	public Product(Long id, String name, String description, String imgUri) {
+	public Product(Long id, String name, String description, Double price, String imgUri) {
 		this.id = id;
 		this.name = name;
 		this.description = description;
+		this.price = price;
 		this.imgUri = imgUri;
 	}
 
@@ -62,6 +65,14 @@ public class Product implements Serializable {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public Double getPrice() {
+		return price;
+	}
+
+	public void setPrice(Double price) {
+		this.price = price;
 	}
 
 	public String getImgUri() {
