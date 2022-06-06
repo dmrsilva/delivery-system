@@ -15,9 +15,11 @@ const Home = () => {
               Simplificamos o gerenciamento de pedidos do seu estabelecimento.
             </p>
           </div>
-          <Link to="/">
-            <ButtonIcon />
-          </Link>
+          <div>
+            <Link to="/">
+              <ButtonIcon />
+            </Link>
+          </div>
         </div>
         <div className="home-image-container">
           <img src={MainImage} alt="Entragador de motocicleta" />

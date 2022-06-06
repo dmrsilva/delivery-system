@@ -55,30 +55,22 @@
     margin-bottom: 20px;
   }
 
-  .home-content-container button {
-    width: 450px;
-  }
-
   .home-image-container img {
     width: 480px;
   }
-
 }
 
 @media (min-width: 768px) {
-
   .home-image-container {
     padding: 80px 15px;
   }
 
   .home-content-container {
     padding: 15px 15px 50px 15px;
-  }  
-  
+  }
 }
 
 @media (min-width: 992px) {
-
   .home-container {
     font-size: 40px;
     padding: 20px;
@@ -90,20 +82,18 @@
 
   .home-content-container {
     padding: 15px 15px 60px 15px;
-  }  
+  }
 
   .home-content-container h1 {
     margin-bottom: 20px;
   }
-  
+
   .home-content-container p {
     margin-bottom: 30px;
   }
-  
 }
 
 @media (min-width: 1200px) {
-
   .home-card {
     flex-direction: row;
     justify-content: space-around;
@@ -129,5 +119,4 @@
   .home-image-container img {
     width: 480px;
   }
-
 }
