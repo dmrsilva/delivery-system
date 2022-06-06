@@ -13,11 +13,11 @@ INSERT INTO tb_order (moment, status) VALUES (TIMESTAMP WITH TIME ZONE '2022-05-
 INSERT INTO tb_order (moment, status) VALUES (TIMESTAMP WITH TIME ZONE '2022-05-10T20:30:10.12345Z', 0);
 INSERT INTO tb_order (moment, status) VALUES (TIMESTAMP WITH TIME ZONE '2022-05-10T20:30:10.12345Z', 0);
 
-INSERT INTO tb_product (name, description, price, img_uri) VALUES ('Hamburger', 'Hamburger de siri', 35.00, 'https://raw.githubusercontent.com/');
-INSERT INTO tb_product (name, description, price, img_uri) VALUES ('Bolo', 'Bolo de cenoura com cobertura de chocolate', 70.00, 'https://raw.githubusercontent.com/');
-INSERT INTO tb_product (name, description, price, img_uri) VALUES ('Sopa', 'Sopa quente em um dia frio', 25.00, 'https://raw.githubusercontent.com/');
-INSERT INTO tb_product (name, description, price, img_uri) VALUES ('Pizza', 'Pizza de calabresa com borda de cheddar', 82.00, 'https://raw.githubusercontent.com/');
-INSERT INTO tb_product (name, description, price, img_uri) VALUES ('Refrigerante', 'Refrigerante pureza, sabor guaraná', 3.50, 'https://raw.githubusercontent.com/');
+INSERT INTO tb_product (name, description, price, img_uri) VALUES ('Hamburger', 'Hamburger de siri', 35.00, 'https://raw.githubusercontent.com/devsuperior/dscatalog-resources/master/backend/img/2-big.jpg');
+INSERT INTO tb_product (name, description, price, img_uri) VALUES ('Bolo', 'Bolo de cenoura com cobertura de chocolate', 70.00, 'https://raw.githubusercontent.com/devsuperior/dscatalog-resources/master/backend/img/2-big.jpg');
+INSERT INTO tb_product (name, description, price, img_uri) VALUES ('Sopa', 'Sopa quente em um dia frio', 25.00, 'https://raw.githubusercontent.com/devsuperior/dscatalog-resources/master/backend/img/2-big.jpg');
+INSERT INTO tb_product (name, description, price, img_uri) VALUES ('Pizza', 'Pizza de calabresa com borda de cheddar', 82.00, 'https://raw.githubusercontent.com/devsuperior/dscatalog-resources/master/backend/img/2-big.jpg');
+INSERT INTO tb_product (name, description, price, img_uri) VALUES ('Refrigerante', 'Refrigerante pureza, sabor guaraná', 3.50, 'https://raw.githubusercontent.com/devsuperior/dscatalog-resources/master/backend/img/2-big.jpg');
 
 INSERT INTO tb_order_product(order_id, product_id) VALUES (1, 4);
 INSERT INTO tb_order_product(order_id, product_id) VALUES (1, 5);
