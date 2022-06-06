@@ -1,12 +1,9 @@
 import './assets/styles/custom.scss';
 import './App.css';
+import Navbar from 'components/Navbar';
 
-function App() {
-  return (
-    <div className="App">
-      <h1>Delivery System</h1>
-    </div>
-  );
-}
+const App = () => {
+  return <Navbar />;
+};
 
 export default App;
