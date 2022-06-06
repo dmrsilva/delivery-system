@@ -1,10 +1,10 @@
-import Home from 'pages/Home';
+import Menu from 'pages/Menu';
 
 import './assets/styles/custom.scss';
 import './App.css';
 
 const App = () => {
-  return <Home />;
+  return <Menu />;
 };
 
 export default App;
