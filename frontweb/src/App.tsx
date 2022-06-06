@@ -1,10 +1,12 @@
-import Menu from 'pages/Menu';
+import Routes from 'Routes';
 
 import './assets/styles/custom.scss';
 import './App.css';
 
 const App = () => {
-  return <Menu />;
+  return (
+    <Routes />
+  )
 };
 
 export default App;
