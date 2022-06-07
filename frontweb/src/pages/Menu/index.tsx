@@ -1,19 +1,32 @@
+import axios from 'axios';
 import Pagination from 'components/Pagination';
 import ProductCard from 'components/ProductCard';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Product } from 'types/product';
+import { AxiosParams } from 'types/vendor/axios';
+import { SpringPage } from 'types/vendor/spring';
+import { BASE_URL } from 'utils/requests';
 
 import './styles.css';
 
 const Menu = () => {
-  const product: Product = {
-    id: 1,
-    name: 'Hamburger',
-    description: 'Hamburger de siri',
-    price: 35.0,
-    imgUri:
-      'https://raw.githubusercontent.com/devsuperior/dscatalog-resources/master/backend/img/2-big.jpg',
-  };
+  const [page, setPage] = useState<SpringPage<Product>>();
+
+  useEffect(() => {
+    const params: AxiosParams = {
+      method: 'GET',
+      url: `${BASE_URL}/products`,
+      params: {
+        page: 0,
+        size: 12,
+      },
+    };
+
+    axios(params).then((response) => {
+      setPage(response.data);
+    });
+  }, []);
 
   return (
     <div className="container my-4 menu-container">
@@ -21,36 +34,17 @@ const Menu = () => {
         <h1>Menu de Produtos</h1>
       </div>
       <div className="row">
-        <div className="col-sm-6 col-lg-4 col-xl-3">
-          <Link to="/products/1">
-            <ProductCard product={product} />
-          </Link>
-        </div>
-        <div className="col-sm-6 col-lg-4 col-xl-3">
-          <Link to="/products/1">
-            <ProductCard product={product} />
-          </Link>
-        </div>
-        <div className="col-sm-6 col-lg-4 col-xl-3">
-          <Link to="/products/1">
-            <ProductCard product={product} />
-          </Link>
-        </div>
-        <div className="col-sm-6 col-lg-4 col-xl-3">
-          <Link to="/products/1">
-            <ProductCard product={product} />
-          </Link>
-        </div>
-        <div className="col-sm-6 col-lg-4 col-xl-3">
-          <Link to="/products/1">
-            <ProductCard product={product} />
-          </Link>
-        </div>
+        {page?.content.map((product) => (
+          <div className="col-sm-6 col-lg-4 col-xl-3" key={product.id}>
+            <Link to="/products/1">
+              <ProductCard product={product} />
+            </Link>
+          </div>
+        ))}
       </div>
       <div className="row">
         <Pagination />
       </div>
-
     </div>
   );
 };
