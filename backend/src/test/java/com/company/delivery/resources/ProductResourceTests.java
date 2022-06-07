@@ -20,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
@@ -52,7 +53,7 @@ public class ProductResourceTests {
 	private long nonExistingId;
 	private long dependentId;
 	private ProductDTO productDTO;
-	private List<ProductDTO> list;
+	private PageImpl<ProductDTO> page;
 	
 	private String username;
 	private String password;
@@ -68,8 +69,10 @@ public class ProductResourceTests {
 		dependentId = 3L;
 
 		productDTO = Factory.createProductDTO();
+		
+		page = new PageImpl<>(List.of(productDTO));
 
-		when(service.findAllProducts()).thenReturn(list);
+		when(service.findAllPagedProducts(any())).thenReturn(page);
 
 		when(service.findByProductId(existingId)).thenReturn(productDTO);
 		when(service.findByProductId(nonExistingId)).thenThrow(ResourceNotFoundException.class);
@@ -85,7 +88,7 @@ public class ProductResourceTests {
 	}
 
 	@Test
-	public void findAllShouldReturnList() throws Exception {
+	public void findAllShouldReturnPage() throws Exception {
 		
 		String accessToken = tokenUtil.obtainAccessToken(mockMvc, username, password);
 

@@ -2,7 +2,6 @@ package com.company.delivery.services;
 
 import static org.mockito.ArgumentMatchers.any;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -14,6 +13,10 @@ import org.mockito.ArgumentMatchers;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import com.company.delivery.dto.OrderDTO;
@@ -37,7 +40,7 @@ public class OrderServiceTests {
 	private long dependentId;
 	private Order order;
 	private OrderDTO orderDTO;
-	private List<Order> list;
+	private PageImpl<Order> page;
 
 	@BeforeEach
 	void setUp() throws Exception {
@@ -47,9 +50,9 @@ public class OrderServiceTests {
 		dependentId = 3L;
 		order = Factory.createOrder();
 		orderDTO = Factory.createOrderDTO();
-		list = new ArrayList<>(List.of(order));
+		page = new PageImpl<>(List.of(order));
 
-		Mockito.when(repository.findAll()).thenReturn(list);
+		Mockito.when(repository.findAll((Pageable)ArgumentMatchers.any())).thenReturn(page);
 
 		Mockito.when(repository.findById(existingId)).thenReturn(Optional.of(order));
 
@@ -69,13 +72,15 @@ public class OrderServiceTests {
 	}
 
 	@Test
-	public void findAllShouldReturnList() {
+	public void findAllPagedShouldReturnPage() {
 
-		List<OrderDTO> result = service.findAllOrders();
-
+		Pageable pageable = PageRequest.of(0, 5);
+		
+		Page<OrderDTO> result = service.findAllPagedOrders(pageable);
+		
 		Assertions.assertNotNull(result);
+		Mockito.verify(repository).findAll(pageable);
 
-		Mockito.verify(repository).findAll();
 	}
 
 	@Test

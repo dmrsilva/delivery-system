@@ -1,15 +1,15 @@
 package com.company.delivery.services;
 
 import java.time.Instant;
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import javax.persistence.EntityNotFoundException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -32,9 +32,9 @@ public class OrderService {
 	private ProductRepository productRepository;
 	
 	@Transactional(readOnly = true)
-	public List<OrderDTO> findAllOrders() {
-		List<Order> orders = repository.findAll();
-		return orders.stream().map(x -> new OrderDTO(x, x.getProducts())).collect(Collectors.toList());
+	public Page<OrderDTO> findAllPagedOrders(Pageable pageable) {
+		Page<Order> orders = repository.findAll(pageable);
+		return orders.map(x -> new OrderDTO(x, x.getProducts()));
 	}
 	
 	@Transactional(readOnly = true)

@@ -1,9 +1,10 @@
 package com.company.delivery.resources;
 
 import java.net.URI;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,9 +27,9 @@ public class OrderResource {
 	private OrderService service;
 	
 	@GetMapping
-	public ResponseEntity<List<OrderDTO>> findAllOrders() {
-		List<OrderDTO> list = service.findAllOrders();
-		return ResponseEntity.ok().body(list);
+	public ResponseEntity<Page<OrderDTO>> findAllPagedOrders(Pageable pageable) {
+		Page<OrderDTO> pageOrders = service.findAllPagedOrders(pageable);
+		return ResponseEntity.ok().body(pageOrders);
 	}
 	
 	@GetMapping(value = "/{id}")

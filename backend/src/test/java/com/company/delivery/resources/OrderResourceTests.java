@@ -20,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
@@ -52,7 +53,7 @@ public class OrderResourceTests {
 	private long nonExistingId;
 	private long dependentId;
 	private OrderDTO orderDTO;
-	private List<OrderDTO> list;
+	private PageImpl<OrderDTO> page;
 	
 	private String username;
 	private String password;
@@ -68,8 +69,10 @@ public class OrderResourceTests {
 		dependentId = 3L;
 
 		orderDTO = Factory.createOrderDTO();
+		
+		page = new PageImpl<>(List.of(orderDTO));
 
-		when(service.findAllOrders()).thenReturn(list);
+		when(service.findAllPagedOrders(any())).thenReturn(page);
 
 		when(service.findByOrderId(existingId)).thenReturn(orderDTO);
 		when(service.findByOrderId(nonExistingId)).thenThrow(ResourceNotFoundException.class);
