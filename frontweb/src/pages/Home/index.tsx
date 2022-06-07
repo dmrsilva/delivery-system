@@ -1,4 +1,4 @@
-import MainImage from 'assets/images/main-image.png';
+import MainImage from 'assets/images/bolo.jpeg';
 import ButtonIcon from 'components/ButtonIcon';
 import { Link } from 'react-router-dom';
 
