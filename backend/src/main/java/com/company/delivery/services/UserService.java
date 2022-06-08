@@ -1,14 +1,14 @@
 package com.company.delivery.services;
 
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import javax.persistence.EntityNotFoundException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -40,9 +40,9 @@ public class UserService implements UserDetailsService {
 	private RoleRepository roleRepository;
 	
 	@Transactional(readOnly = true)
-	public List<UserDTO> findAllUsers() {
-		List<User> users = repository.findAll();
-		return users.stream().map(x -> new UserDTO(x)).collect(Collectors.toList());
+	public Page<UserDTO> findAllPageUsers(Pageable pageable) {
+		Page<User> users = repository.findAll(pageable);
+		return users.map(x -> new UserDTO(x));	
 	}
 
 	@Transactional(readOnly = true)

@@ -1,11 +1,12 @@
 package com.company.delivery.resources;
 
 import java.net.URI;
-import java.util.List;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,9 +31,9 @@ public class UserResource {
 	private UserService service;
 	
 	@GetMapping
-	public ResponseEntity<List<UserDTO>> findAllUsers() {
-		List<UserDTO> list = service.findAllUsers();
-		return ResponseEntity.ok().body(list);
+	public ResponseEntity<Page<UserDTO>> findAllUsers(Pageable pageable) {
+		Page<UserDTO> page = service.findAllPageUsers(pageable);
+		return ResponseEntity.ok().body(page);
 	}
 	
 	@GetMapping(value = "/{id}")
