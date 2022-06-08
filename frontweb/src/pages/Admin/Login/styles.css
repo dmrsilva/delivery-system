@@ -52,7 +52,5 @@
 @media (min-width: 576px) {
   .login-card {
     padding: 30px;
-    width: 500px;
-    height: 580px;
   }
 }
