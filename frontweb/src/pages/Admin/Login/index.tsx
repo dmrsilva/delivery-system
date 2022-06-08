@@ -3,13 +3,9 @@ import { useForm } from 'react-hook-form';
 import { useContext, useState } from 'react';
 import { AuthContext } from 'AuthContext';
 import ButtonIcon from 'components/ButtonIcon';
-
-import {
-  getTokenData,
-  requestBackendLogin,
-  saveAuthData,
-} from 'utils/requests';
-
+import { requestBackendLogin } from 'utils/requests';
+import { saveAuthData } from 'utils/storage';
+import { getTokenData } from 'utils/auth';
 
 import './styles.css';
 
@@ -23,7 +19,6 @@ type LocationState = {
 };
 
 const Login = () => {
-
   const location = useLocation<LocationState>();
 
   const { from } = location.state || { from: { pathname: '/admin' } };
