@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import ButtonIcon from 'components/ButtonIcon';
 import { getAuthData, requestBackendLogin, saveAuthData } from 'utils/requests';
@@ -20,17 +20,17 @@ const Login = () => {
     formState: { errors },
   } = useForm<FormData>();
 
+  const history = useHistory();
+
   const onSubmit = (formData: FormData) => {
     requestBackendLogin(formData)
       .then((response) => {
         saveAuthData(response.data);
-        console.log('token gerado ' + getAuthData().access_token);
         setHasError(false);
-        console.log('SUCESSO', response);
+        history.push('/admin');
       })
       .catch((error) => {
         setHasError(true);
-        console.log('ERRO', error);
       });
   };
 
