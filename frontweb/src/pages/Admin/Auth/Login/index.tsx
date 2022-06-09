@@ -2,14 +2,14 @@ import { Link, useHistory, useLocation } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { useContext, useState } from 'react';
 import { AuthContext } from 'AuthContext';
-import ButtonIcon from 'components/ButtonIcon';
 import { requestBackendLogin } from 'utils/requests';
 import { saveAuthData } from 'utils/storage';
 import { getTokenData } from 'utils/auth';
+import ButtonIcon from 'components/ButtonIcon';
 
 import './styles.css';
 
-type FormData = {
+type CredentialsDTO = {
   username: string;
   password: string;
 };
@@ -31,11 +31,11 @@ const Login = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<FormData>();
+  } = useForm<CredentialsDTO>();
 
   const history = useHistory();
 
-  const onSubmit = (formData: FormData) => {
+  const onSubmit = (formData: CredentialsDTO) => {
     requestBackendLogin(formData)
       .then((response) => {
         saveAuthData(response.data);
