@@ -1,0 +1,37 @@
+.product-crud-card {
+  margin-bottom: 30px;
+  padding-bottom: 20px;
+}
+
+.product-crud-card-top-container {
+  text-align: center;
+  padding: 16px 0;
+  border-bottom: 1px solid #e1e1e1;
+}
+
+.product-crud-card-top-container img {
+  width: 158px;
+  height: 158px;
+}
+
+.product-crud-card-bottom-container {
+  padding: 15px 20px 25px 20px;
+}
+
+.product-crud-card-bottom-container h6 {
+  font-size: 18px;
+}
+
+.product-crud-card-buttons-container {
+  padding: 0 20px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.product-crud-card-button {
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: -0.015em;
+  border-radius: 10px;
+  width: 100px;
+}
