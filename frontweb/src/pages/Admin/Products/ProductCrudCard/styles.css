@@ -68,9 +68,3 @@
     flex: 1;
   }
 }
-
-@media (min-width: 992px) {
-  .product-crud-card-button {
-    margin-top: 50px;
-  }
-}
