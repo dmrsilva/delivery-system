@@ -29,9 +29,48 @@
 }
 
 .product-crud-card-button {
-  font-weight: 700;
+  font-weight: 700 !important;
   font-size: 14px;
   letter-spacing: -0.015em;
-  border-radius: 10px;
   width: 100px;
+}
+
+@media (min-width: 768px) {
+  .product-crud-card {
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 0;
+  }
+
+  .product-crud-card-top-container {
+    border-bottom: 0;
+    border-right: 1px solid #e1e1e1;
+  }
+
+  .product-crud-card-button {
+    width: 120px;
+    height: 40px;
+  }
+
+  .product-crud-card-buttons-container {
+    flex-direction: column-reverse;
+    justify-content: center;
+  }
+
+  .product-crud-card-button-first {
+    margin-top: 22px;
+  }
+
+  .product-crud-card-description {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex: 1;
+  }
+}
+
+@media (min-width: 992px) {
+  .product-crud-card-button {
+    margin-top: 50px;
+  }
 }
