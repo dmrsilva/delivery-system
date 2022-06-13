@@ -18,17 +18,17 @@ public class ProductDTO implements Serializable {
 	
 	@Positive(message = "Preço deve ser um valor positivo")	
 	private Double price;
-	private String imgUri;
+	private String imgUrl;
 	
 	public ProductDTO() {
 	}
 	
-	public ProductDTO(Long id, String name, String description, Double price, String imgUri) {
+	public ProductDTO(Long id, String name, String description, Double price, String imgUrl) {
 		this.id = id;
 		this.name = name;
 		this.description = description;
 		this.price = price;
-		this.imgUri = imgUri;
+		this.imgUrl = imgUrl;
 	}
 
 	public ProductDTO(Product entity) {
@@ -36,7 +36,7 @@ public class ProductDTO implements Serializable {
 		name = entity.getName();
 		description = entity.getDescription();
 		price = entity.getPrice();
-		imgUri = entity.getImgUri();
+		imgUrl = entity.getImgUrl();
 	}
 
 	public Long getId() {
@@ -71,12 +71,12 @@ public class ProductDTO implements Serializable {
 		this.price = price;
 	}
 
-	public String getImgUri() {
-		return imgUri;
+	public String getImgUrl() {
+		return imgUrl;
 	}
 
-	public void setImgUri(String imgUri) {
-		this.imgUri = imgUri;
+	public void setImgUrl(String imgUrl) {
+		this.imgUrl = imgUrl;
 	}	
 	
 }

@@ -1,9 +1,10 @@
 import { AxiosRequestConfig } from 'axios';
 import { useEffect } from 'react';
-import { useForm } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 import { useHistory, useParams } from 'react-router-dom';
 import { Product } from 'types/product';
 import { requestBackend } from 'utils/requests';
+import CurrencyInput from 'react-currency-input-field';
 
 import './styles.css';
 
@@ -23,6 +24,7 @@ const Form = () => {
     handleSubmit,
     formState: { errors },
     setValue,
+    control,
   } = useForm<Product>();
 
   useEffect(() => {
@@ -87,17 +89,22 @@ const Form = () => {
                 </div>
               </div>
               <div className="margin-bottom-30">
-                <input
-                  {...register('price', {
-                    required: 'Campo obrigatório',
-                  })}
-                  type="text"
-                  className={`form-control base-input ${
-                    errors.price ? 'is-invalid' : ''
-                  }`}
-                  placeholder="Preço"
-                  name="price"
-                />
+                  <Controller
+                    name="price"
+                    rules={{required: 'Campo obrigatório'}}
+                    control={control}
+                    render={({ field }) => (
+                      <CurrencyInput
+                        placeholder="Preço"
+                        className={`form-control base-input ${
+                          errors.price ? 'is-invalid' : ''
+                        }`}
+                        disableGroupSeparators={true}
+                        value={field.value}
+                        onValueChange={field.onChange}
+                      />
+                    )}
+                  />
                 <div className="invalid-feedback d-block">
                   {errors.name?.message}
                 </div>
