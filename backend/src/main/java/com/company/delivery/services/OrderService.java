@@ -27,16 +27,16 @@ public class OrderService {
 
 	@Autowired
 	private OrderRepository repository;
-	
+
 	@Autowired
 	private ProductRepository productRepository;
-	
+
 	@Transactional(readOnly = true)
 	public Page<OrderDTO> findAllPagedOrders(Pageable pageable) {
 		Page<Order> orders = repository.findAll(pageable);
 		return orders.map(x -> new OrderDTO(x, x.getProducts()));
 	}
-	
+
 	@Transactional(readOnly = true)
 	public OrderDTO findByOrderId(Long id) {
 		Optional<Order> obj = repository.findById(id);
@@ -49,9 +49,9 @@ public class OrderService {
 		Order order = new Order();
 		copyDtoToEntity(dto, order);
 		order = repository.save(order);
-		return new OrderDTO(order);		
+		return new OrderDTO(order);
 	}
-	
+
 	@Transactional
 	public OrderDTO updateOrder(Long id, OrderDTO dto) {
 		try {
@@ -59,32 +59,29 @@ public class OrderService {
 			copyDtoToEntity(dto, order);
 			order = repository.save(order);
 			return new OrderDTO(order);
-		}
-		catch (EntityNotFoundException e) {
+		} catch (EntityNotFoundException e) {
 			throw new ResourceNotFoundException("Id not found " + id);
 		}
 	}
-	
+
 	public void delete(Long id) {
 		try {
 			repository.deleteById(id);
-		}
-		catch (EmptyResultDataAccessException e) {
+		} catch (EmptyResultDataAccessException e) {
 			throw new ResourceNotFoundException("Id not found " + id);
-		}
-		catch (DataIntegrityViolationException e) {
+		} catch (DataIntegrityViolationException e) {
 			throw new DatabaseException("Integrity violation");
 		}
 	}
-	
+
 	private void copyDtoToEntity(OrderDTO dto, Order order) {
 		order.setMoment(Instant.now());
 		order.setStatus(dto.getStatus());
-		
+
 		for (ProductDTO prodDTO : dto.getProducts()) {
 			Product product = productRepository.getById(prodDTO.getId());
 			order.getProducts().add(product);
 		}
 	}
-	
+
 }
