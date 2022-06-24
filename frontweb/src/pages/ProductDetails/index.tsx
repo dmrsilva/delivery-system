@@ -49,7 +49,7 @@ const ProductDetails = () => {
             ) : (
               <>
                 <div className="img-container">
-                  <img src={product?.imgUri} alt={product?.name} />
+                  <img src={product?.imgUrl} alt={product?.name} />
                 </div>
                 <div className="name-price-container">
                   <h1>{product?.name}</h1>

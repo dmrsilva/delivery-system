@@ -32,7 +32,7 @@ const ProductCrudCard = ({ product, onDelete }: Props) => {
   return (
     <div className="base-card product-crud-card">
       <div className="product-crud-card-top-container">
-        <img src={product.imgUri} alt={product.name} />
+        <img src={product.imgUrl} alt={product.name} />
       </div>
 
       <div className="product-crud-card-description">
