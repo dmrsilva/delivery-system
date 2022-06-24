@@ -14,13 +14,13 @@ const Menu = () => {
   const [page, setPage] = useState<SpringPage<Product>>();
   const [isLoading, setIsLoading] = useState(false);
 
-  useEffect(() => {
+  const getProducts = (pageNumber: number) => {
     const params: AxiosRequestConfig = {
       method: 'GET',
       url: '/products',
       params: {
-        page: 0,
-        size: 12,
+        page: pageNumber,
+        size: 8,
       },
     };
 
@@ -32,6 +32,10 @@ const Menu = () => {
       .finally(() => {
         setIsLoading(false);
       });
+  };
+
+  useEffect(() => {
+    getProducts(0);
   }, []);
 
   return (
@@ -53,7 +57,11 @@ const Menu = () => {
         )}
       </div>
       <div className="row">
-        <Pagination />
+        <Pagination
+          pageCount={page ? page.totalPages : 0}
+          range={3}
+          onChange={getProducts}
+        />
       </div>
     </div>
   );
