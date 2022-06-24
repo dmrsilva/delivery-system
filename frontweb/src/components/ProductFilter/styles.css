@@ -21,10 +21,20 @@
     color: #9E9E9E;
 }
 
+.product-filter-search-icon {
+    border: none;
+    background-color: unset;
+}
+
 @media (min-width: 768px) {
   .product-filter-container {
     margin-left: 20px;
     flex: 1;
     margin-bottom: 0;
   }
+
+  .product-filter-container {
+    padding: 10px 15px;
+  }
+  
 }

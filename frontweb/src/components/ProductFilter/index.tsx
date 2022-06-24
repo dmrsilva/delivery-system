@@ -11,9 +11,6 @@ const ProductFilter = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors },
-    setValue,
-    control,
   } = useForm<ProductFilterData>();
 
   const onSubmit = (formData: ProductFilterData) => {
@@ -31,12 +28,9 @@ const ProductFilter = () => {
             placeholder="Nome do produto"
             name="name"
           />
-          <button>
+          <button className="product-filter-search-icon">
             <SearchIcon />
           </button>
-        </div>
-        <div className="product-filter-bottom-container">
-          <button className="btn btn-outline-secondary">Limpar</button>
         </div>
       </form>
     </div>
