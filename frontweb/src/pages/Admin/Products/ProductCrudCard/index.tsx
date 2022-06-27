@@ -3,6 +3,7 @@ import ProductPrice from 'components/ProductPrice';
 import { Link } from 'react-router-dom';
 import { Product } from 'types/product';
 import { requestBackend } from 'utils/requests';
+import { toast } from 'react-toastify';
 
 import './styles.css';
 
@@ -26,8 +27,11 @@ const ProductCrudCard = ({ product, onDelete }: Props) => {
 
     requestBackend(config).then(() => {
       onDelete();
-    });
-  };
+    })
+    .catch(() => {
+      toast.error('Este produto está associado a um pedido');
+  });
+}
 
   return (
     <div className="base-card product-crud-card">

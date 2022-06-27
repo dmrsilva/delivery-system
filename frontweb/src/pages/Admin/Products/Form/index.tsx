@@ -5,6 +5,7 @@ import { useHistory, useParams } from 'react-router-dom';
 import { Product } from 'types/product';
 import { requestBackend } from 'utils/requests';
 import CurrencyInput from 'react-currency-input-field';
+import { toast } from 'react-toastify';
 
 import './styles.css';
 
@@ -49,6 +50,7 @@ const Form = () => {
     };
 
     requestBackend(config).then(() => {
+      toast.info('Product cadastrado com sucesso');
       history.push('/admin/products');
     });
   };
