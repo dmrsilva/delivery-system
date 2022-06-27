@@ -3,18 +3,23 @@ import { useForm } from 'react-hook-form';
 
 import './styles.css';
 
-type ProductFilterData = {
+export type ProductFilterData = {
   name: string;
 };
 
-const ProductFilter = () => {
-  const {
-    register,
-    handleSubmit,
-  } = useForm<ProductFilterData>();
+type Props = {
+  onSubmitFilter: (data: ProductFilterData) => void;
+};
+
+const ProductFilter = ({ onSubmitFilter }: Props) => {
+  const { register, handleSubmit, setValue } = useForm<ProductFilterData>();
 
   const onSubmit = (formData: ProductFilterData) => {
-    console.log('enviou', formData);
+    onSubmitFilter(formData);
+  };
+
+  const handleFormClear = () => {
+    setValue('name', '');
   };
 
   return (
@@ -32,6 +37,12 @@ const ProductFilter = () => {
             <SearchIcon />
           </button>
         </div>
+        <button
+          onClick={handleFormClear}
+          className="btn btn-outline-secondary btn-product-filter-clear"
+        >
+          LIMPAR<span className="btn-product-filter-word"> FILTRO</span>
+        </button>
       </form>
     </div>
   );

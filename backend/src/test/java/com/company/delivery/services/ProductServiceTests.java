@@ -56,6 +56,8 @@ public class ProductServiceTests {
 
 		Mockito.when(repository.findById(existingId)).thenReturn(Optional.of(product));
 
+		Mockito.when(repository.find(any(), any())).thenReturn(page);
+
 		Mockito.when(repository.findById(nonExistingId)).thenReturn(Optional.empty());
 
 		Mockito.when(repository.save(ArgumentMatchers.any())).thenReturn(product);
@@ -76,10 +78,10 @@ public class ProductServiceTests {
 
 		Pageable pageable = PageRequest.of(0, 10);
 		
-		Page<ProductDTO> result = service.findAllPagedProducts(pageable);
+		Page<ProductDTO> result = service.findAllPagedProducts("", pageable);
 		
 		Assertions.assertNotNull(result);
-		Mockito.verify(repository).findAll(pageable);
+		Mockito.verify(repository).find("", pageable);
 	}
 
 	@Test
