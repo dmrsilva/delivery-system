@@ -53,8 +53,6 @@ Pré-requisitos: Java 11
 ```bash
 # clonar repositório
 git clone git@github.com:dmrsilva/delivery-system.git
-ou
-git clone https://github.com/dmrsilva/delivery-system.git
 
 # entrar na pasta do projeto back end
 cd backend
@@ -69,8 +67,6 @@ Pré-requisitos: yarn
 ```bash
 # clonar repositório
 git clone git@github.com:dmrsilva/delivery-system.git
-ou
-git clone https://github.com/dmrsilva/delivery-system.git
 
 # entrar na pasta do projeto front end web
 cd frontweb
