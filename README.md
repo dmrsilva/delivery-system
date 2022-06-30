@@ -25,12 +25,12 @@ onde um usuário **autenticado** e devidamente **autorizado** poderá manipular 
 ![Web 2](https://github.com/dmrsilva/assets/blob/main/image-web-2.png)
 
 # Tecnologias utilizadas
-## Front end
+## Front-end
 - HTML / CSS / JS / TypeScript
 - Bootstrap
 - React
 - Axios
-## Back end
+## Back-end
 - Java
 - Spring Boot
 - JPA / Hibernate / JPQL
@@ -40,14 +40,15 @@ onde um usuário **autenticado** e devidamente **autorizado** poderá manipular 
 ## Persistência de dados
 - PostgreSQL
 ## Implantação em produção
-- Front end web: Netlify
-- Back end: Heroku / AWS / Docker
+- Front-end web: Netlify
+- Back-end: Heroku
 - Banco de dados: PostgreSQL
-- AWS: EC2 / VPC / RDS
+## Implantação da API sem integração com o Front-end
+- AWS: EC2 / VPC / RDS / Docker
 
 # Como executar o projeto
 
-## Back end
+## Back-end
 Pré-requisitos: Java 11
 
 ```bash
@@ -61,7 +62,7 @@ cd backend
 ./mvnw spring-boot:run
 ```
 
-## Front end web
+## Front-end
 Pré-requisitos: yarn
 
 ```bash
