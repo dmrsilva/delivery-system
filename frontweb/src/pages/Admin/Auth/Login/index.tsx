@@ -94,7 +94,8 @@ const Login = () => {
             {errors.password?.message}
           </div>
         </div>
-        <Link to="/admin/auth/recover" className="login-link-recover">
+        {/* <Link to="/admin/auth/recover" className="login-link-recover"> */}
+        <Link to="#" className="login-link-recover">
           Esqueci a senha
         </Link>
         <div className="login-submit">
@@ -102,7 +103,8 @@ const Login = () => {
         </div>
         <div className="signup-container">
           <span className="not-registered">Não tem Cadastro?</span>
-          <Link to="/admin/auth/register" className="login-link-register">
+          {/*<Link to="/admin/auth/register" className="login-link-register">*/}
+          <Link to="#" className="login-link-register">
             CADASTRAR
           </Link>
         </div>

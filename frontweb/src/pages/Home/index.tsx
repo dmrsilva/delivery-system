@@ -16,8 +16,8 @@ const Home = () => {
             </p>
           </div>
           <div>
-            <Link to="/admin/orders">
-              <ButtonIcon text="Ir para página de pedidos"/>
+            <Link to="/products">
+              <ButtonIcon text="Ir para página de produtos"/>
             </Link>
           </div>
         </div>
